@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "822801946154",
+    "firebase_url": "https://notesy-669ff.firebaseio.com",
+    "project_id": "notesy-669ff",
+    "storage_bucket": "notesy-669ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822801946154:android:43f61d40af88805084d553",
+        "android_client_info": {
+          "package_name": "io.github.aryaanlambe.notesy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822801946154-pja9pqk5hvmi7hvs3bid8jv5k0l529ug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.aryaanlambe.notesy",
+            "certificate_hash": "977be306a9c4b1edab0d1bee5a87bbae08275c8d"
+          }
+        },
+        {
+          "client_id": "822801946154-ar69mnt5pqjsf1ce4kt072dkqrschg2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9nk9ri_m_0-4pe9sdhD17c_DM-o2KwPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822801946154-ar69mnt5pqjsf1ce4kt072dkqrschg2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
