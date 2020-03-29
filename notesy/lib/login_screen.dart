@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart' show GoogleSignIn;
-import 'package:notesy/styles.dart';
+import 'package:notesy/loginanimations.dart';
+import 'package:notesy/loginconstants.dart';
 
 /// Login screen.
 class LoginScreen extends StatefulWidget {
@@ -11,7 +12,6 @@ class LoginScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-/// State for [LoginScreen].
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
@@ -31,128 +31,173 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Theme(
-          data: ThemeData(primarySwatch: kAccentColorLight).copyWith(
-            buttonTheme: ButtonTheme.of(context).copyWith(
-              buttonColor: kAccentColorLight,
-              textTheme: ButtonTextTheme.primary,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 200,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                    child: FadeAnimation(
+                  1,
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/loginbackground.png"),
+                      ),
+                    ),
+                  ),
+                ))
+              ],
             ),
           ),
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              child: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 560,
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 100, horizontal: 48),
-                child: Form(
-                  key: _loginForm,
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset('assets/images/thumbtack_intro.png'),
-                      const SizedBox(height: 32),
-                      const Text(
-                        'Capture anything',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeights.medium,
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      if (_useEmailSignIn) ..._buildEmailSignInFields(),
-                      if (!_useEmailSignIn) ..._buildGoogleSignInFields(),
-                      if (_errorMessage != null) _buildLoginMessage(),
-                    ],
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                FadeAnimation(
+                  1,
+                  Text(
+                    "Hello there, \nwelcome to Notesy!",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Color(0xff21254A),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 40,
+                ),
+                FadeAnimation(
+                  1,
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.transparent,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 12.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: kBoxDecorationStyle,
+                          height: 60.0,
+                          child: TextField(
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Color(0xff21254A),
+                              fontFamily: 'OpenSans',
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(top: 14.0),
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Color(0xff21254A),
+                              ),
+                              hintText: 'Enter your Email',
+                              hintStyle: kHintTextStyle,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: kBoxDecorationStyle,
+                          height: 60.0,
+                          child: TextField(
+                            obscureText: true,
+                            style: TextStyle(
+                              color: Color(0xff21254A),
+                              fontFamily: 'OpenSans',
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(top: 14.0),
+                              prefixIcon: Icon(
+                                Icons.vpn_key,
+                                color: Color(0xff21254A),
+                              ),
+                              hintText: 'Enter your Password',
+                              hintStyle: kHintTextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Center(
+                  child: FadeAnimation(
+                    1,
+                    Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                FadeAnimation(
+                  1,
+                  Container(
+                    height: 50,
+                    margin: EdgeInsets.symmetric(horizontal: 60),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Color.fromRGBO(105, 62, 212, 1),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                FadeAnimation(
+                  1,
+                  // Wrap entire Center widget with a GestureDetector then add onTap function. _signInWithGoogle,
+                  GestureDetector(
+                    onTap: _signInWithGoogle,
+                    child: Center(
+                      child: Text(
+                        "Sign in With Google",
+                        style: TextStyle(
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ),
-      );
-
-  List<Widget> _buildGoogleSignInFields() => [
-        RaisedButton(
-          padding: const EdgeInsets.all(0),
-          onPressed: _signInWithGoogle,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Image.asset('assets/images/google.png', width: 40),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40 / 1.618),
-                child: const Text('Continue with Google'),
-              ),
-            ],
-          ),
-        ),
-        FlatButton(
-          child: Text('Sign in with email'),
-          onPressed: () => setState(() {
-            _useEmailSignIn = true;
-          }),
-        ),
-        if (_loggingIn)
-          Container(
-            width: 22,
-            height: 22,
-            margin: const EdgeInsets.only(top: 12),
-            child: const CircularProgressIndicator(),
-          ),
-      ];
-
-  List<Widget> _buildEmailSignInFields() => [
-        TextFormField(
-          controller: _emailController,
-          decoration: const InputDecoration(
-            hintText: 'Email',
-          ),
-          validator: (value) =>
-              value.isEmpty ? 'Please input your email' : null,
-        ),
-        TextFormField(
-          controller: _passwordController,
-          decoration: const InputDecoration(
-            hintText: 'Password',
-          ),
-          validator: (value) =>
-              value.isEmpty ? 'Please input your password' : null,
-          obscureText: true,
-        ),
-        const SizedBox(height: 16),
-        _buildEmailSignInButton(),
-        if (_loggingIn) const LinearProgressIndicator(),
-        FlatButton(
-          child: Text('Use Google Sign In'),
-          onPressed: () => setState(() {
-            _useEmailSignIn = false;
-          }),
-        ),
-      ];
-
-  Widget _buildEmailSignInButton() => RaisedButton(
-        onPressed: _signInWithEmail,
-        child: Container(
-          height: 40,
-          alignment: Alignment.center,
-          child: const Text('Sign in / Sign up'),
-        ),
-      );
-
-  Widget _buildLoginMessage() => Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.only(top: 18),
-        child: Text(
-          _errorMessage,
-          style: const TextStyle(
-            fontSize: 14,
-            color: kErrorColorLight,
-          ),
-        ),
-      );
+          )
+        ],
+      ),
+    );
+  }
 
   void _signInWithGoogle() async {
     _setLoggingIn();
