@@ -57,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> with CommandHandler {
                     constraints: const BoxConstraints.tightFor(width: 720),
                     child: CustomScrollView(
                       slivers: <Widget>[
-                        _appBar(context, filter, child),
+                        //_appBar(context, filter, child),
                         if (hasNotes)
                           const SliverToBoxAdapter(
-                            child: SizedBox(height: 24),
+                            child: SizedBox(height: 100),
                           ),
                         ..._buildNotesView(context, filter, notes),
                         if (hasNotes)
@@ -85,38 +85,6 @@ class _HomeScreenState extends State<HomeScreen> with CommandHandler {
         ),
       );
 
-  Widget _appBar(BuildContext context, NoteFilter filter, Widget bottom) =>
-      filter.noteState < NoteState.archived
-          ? SliverAppBar(
-              floating: true,
-              snap: true,
-              title: _topActions(context),
-              automaticallyImplyLeading: false,
-              centerTitle: true,
-              titleSpacing: 0,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            )
-          : SliverAppBar(
-              floating: true,
-              snap: true,
-              title: Text(filter.noteState.filterName),
-              leading: IconButton(
-                icon: const Icon(Icons.menu),
-                tooltip: 'Menu',
-                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-              ),
-              automaticallyImplyLeading: false,
-            );
-
-  Widget _topActions(BuildContext context) => Container(
-        // width: double.infinity,
-        constraints: const BoxConstraints(
-          maxWidth: 720,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-      );
-
   Widget _bottomActions() => BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Container(
@@ -132,8 +100,15 @@ class _HomeScreenState extends State<HomeScreen> with CommandHandler {
                   _gridView = !_gridView;
                 }),
               ),
-              const SizedBox(width: 30),
-              const Icon(Icons.photo, size: 26, color: kIconTintLight),
+              const SizedBox(width: 259),
+              GestureDetector(
+                child: Icon(
+                  Icons.search,
+                  size: 25,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
             ],
           ),
         ),

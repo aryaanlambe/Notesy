@@ -28,7 +28,7 @@ class NotesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             notes
@@ -37,7 +37,7 @@ class NotesList extends StatelessWidget {
                         onTap: () => onTap?.call(note),
                         child: NoteItem(note: note),
                       ),
-                      if (i < notes.length - 1) const SizedBox(height: 10),
+                      if (i < notes.length - 1) const SizedBox(height: 20),
                     ])
                 .asList(),
           ),

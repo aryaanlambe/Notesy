@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:notesy/drawer_filter.dart';
 import 'package:notesy/filter.dart';
 import 'package:notesy/note.dart';
 import 'package:notesy/styles.dart';
 import 'package:notesy/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'drawer_filter.dart';
 
 /// Navigation drawer for the app.
 class AppDrawer extends StatelessWidget {
@@ -17,8 +16,7 @@ class AppDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _drawerHeader(context),
-              if (isNotIOS)
-                const SizedBox(height: 25),
+              if (isNotIOS) const SizedBox(height: 25),
               DrawerFilterItem(
                 icon: Icons.note,
                 title: 'Notes',
@@ -28,10 +26,6 @@ class AppDrawer extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-//        DrawerFilterItem(
-//          icon: AppIcons.notifications,
-//          title: 'Reminders',
-//        ),
               const Divider(),
               DrawerFilterItem(
                 icon: Icons.archive,
