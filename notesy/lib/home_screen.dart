@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:notesy/drawer.dart';
 import 'package:notesy/filter.dart';
 import 'package:notesy/note.dart';
@@ -21,10 +24,29 @@ class HomeScreen extends StatefulWidget {
 
 /// [State] of [HomeScreen].
 class _HomeScreenState extends State<HomeScreen> with CommandHandler {
+  // To to implement pull to refresh
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+  // GlobalKey<RefreshIndicatorState> refreshKey;
 
   /// `true` to show notes in a GridView, a ListView otherwise.
   bool _gridView = false;
+
+  Future<void> _handleRefresh() {
+    final Completer<void> completer = Completer<void>();
+    Timer(const Duration(seconds: 2), () {
+      completer.complete();
+    });
+    // _buildNotesView;
+    return completer.future
+        .then((_) => _scaffoldKey.currentState?.showSnackBar(SnackBar(
+              content: const Text('Refresh complete!'),
+            )));
+
+    // Add what happens to refresh here.
+  }
 
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
@@ -55,21 +77,27 @@ class _HomeScreenState extends State<HomeScreen> with CommandHandler {
                 body: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints.tightFor(width: 720),
-                    child: CustomScrollView(
-                      slivers: <Widget>[
-                        //_appBar(context, filter, child),
-                        if (hasNotes)
-                          const SliverToBoxAdapter(
-                            child: SizedBox(height: 100),
-                          ),
-                        ..._buildNotesView(context, filter, notes),
-                        if (hasNotes)
-                          SliverToBoxAdapter(
-                            child: SizedBox(
-                                height:
-                                    (canCreate ? kBottomBarSize : 10.0) + 10.0),
-                          ),
-                      ],
+                    child: LiquidPullToRefresh(
+                      key: _refreshIndicatorKey, // Temporary key
+                      onRefresh: () {
+                        return _handleRefresh();
+                      },
+                      child: CustomScrollView(
+                        slivers: <Widget>[
+                          //_appBar(context, filter, child),
+                          if (hasNotes)
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 100),
+                            ),
+                          ..._buildNotesView(context, filter, notes),
+                          if (hasNotes)
+                            SliverToBoxAdapter(
+                              child: SizedBox(
+                                  height: (canCreate ? kBottomBarSize : 10.0) +
+                                      10.0),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
